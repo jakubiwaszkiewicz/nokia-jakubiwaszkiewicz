@@ -26,7 +26,7 @@ def knn():
 
     # Combine the predictions into a response
     response = {
-        "Prediction": knn_pred.tolist()
+        "Prediction": knn_pred
     }
     return jsonify(response)
 
@@ -41,7 +41,7 @@ def gnb():
 
     # Combine the predictions into a response
     response = {
-        "Prediction": gnb_pred.tolist(),
+        "Prediction": gnb_pred
     }
     return jsonify(response)
 
@@ -56,7 +56,7 @@ def mlp():
 
     # Combine the predictions into a response
     response = {
-        "Prediction": mlp_pred.tolist(),
+        "Prediction": mlp_pred
     }
     return jsonify(response)
 
