@@ -21,18 +21,14 @@ def home():
             <li><strong>/gnb</strong> - For predictions using the Gaussian Naive Bayes model.</li>
             <li><strong>/mlp</strong> - For predictions using the Multi-Layer Perceptron model.</li>
         </ul>
-        <li>The POST request should contain JSON data in the following format:</li>
-        <pre>{
-    "features": [1.0, 2.0, 3.0, ...]
-}</pre>
-        <h3>Sample data:</h3>
+        <li>The POST request should contain JSON data in the following format (below is already sample data which you can send on the backend server):</li>
         <pre>{
     "features": [5.0, 13.0, 9.0, 1.0, 0.0, 0.0, 0.0, 13.0, 15.0, 10.0, 15.0, 5.0, 3.0, 15.0, 2.0, 0.0, 11.0, 8.0, 4.0, 12.0, 0.0, 0.0, 8.0, 8.0, 5.0, 8.0, 0.0, 0.0, 9.0, 8.0, 4.0, 11.0, 0.0, 1.0, 12.0, 7.0, 2.0, 14.0, 5.0, 10.0, 12.0, 0.0, 6.0, 13.0, 10.0, 0.0, 0.0, 0.0]
 }</pre>
         <li>You will receive a JSON response with the model's prediction.</li>
     </ol>
     <p>Example using <strong>curl</strong>:</p>
-    <pre>curl -X POST https://nokia-jakubiwaszkeiwicz-recruitment-task.azurewebsites.net/knn -H "Content-Type: application/json" -d '{"features": [5.0, 13.0, 9.0, 1.0, 0.0, 0.0, 0.0, 13.0, 15.0, 10.0, 15.0, 5.0, 3.0, 15.0, 2.0, 0.0, 11.0, 8.0, 4.0, 12.0, 0.0, 0.0, 8.0, 8.0, 5.0, 8.0, 0.0, 0.0, 9.0, 8.0, 4.0, 11.0, 0.0, 1.0, 12.0, 7.0, 2.0, 14.0, 5.0, 10.0, 12.0, 0.0, 6.0, 13.0, 10.0, 0.0, 0.0, 0.0]}'</pre>
+    <span>curl -X POST https://nokia-jakubiwaszkeiwicz-recruitment-task.azurewebsites.net/knn -H "Content-Type: application/json" -d '{"features": [5.0, 13.0, 9.0, 1.0, 0.0, 0.0, 0.0, 13.0, 15.0, 10.0, 15.0, 5.0, 3.0, 15.0, 2.0, 0.0, 11.0, 8.0, 4.0, 12.0, 0.0, 0.0, 8.0, 8.0, 5.0, 8.0, 0.0, 0.0, 9.0, 8.0, 4.0, 11.0, 0.0, 1.0, 12.0, 7.0, 2.0, 14.0, 5.0, 10.0, 12.0, 0.0, 6.0, 13.0, 10.0, 0.0, 0.0, 0.0]}'</span>
     """
 
 @app.route("/knn", methods=["POST"])
