@@ -1,30 +1,47 @@
 from flask import Flask, request, jsonify
 import joblib
 import numpy as np
-import bentoml
 
-# Load the models
 mlp_model = joblib.load("mlp.pkl")
 knn_model = joblib.load("knn.pkl")
 gnb_model = joblib.load("gnb.pkl")
 
-# Initialize Flask app
 app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "Welcome to the ML Prediction API!"
+    return """
+    <h1>Welcome to the ML Prediction API!</h1>
+    <p>This API allows you to get predictions from three machine learning models: KNN, Gaussian Naive Bayes (GNB), and Multi-Layer Perceptron (MLP).</p>
+    <h2>How to Use</h2>
+    <ol>
+        <li>Send a POST request to the following endpoints:</li>
+        <ul>
+            <li><strong>/knn</strong> - For predictions using the KNN model.</li>
+            <li><strong>/gnb</strong> - For predictions using the Gaussian Naive Bayes model.</li>
+            <li><strong>/mlp</strong> - For predictions using the Multi-Layer Perceptron model.</li>
+        </ul>
+        <li>The POST request should contain JSON data in the following format:</li>
+        <pre>{
+    "features": [1.0, 2.0, 3.0, ...]
+}</pre>
+        <h3>Sample data:</h3>
+        <pre>{
+    "features": [5.0, 13.0, 9.0, 1.0, 0.0, 0.0, 0.0, 13.0, 15.0, 10.0, 15.0, 5.0, 3.0, 15.0, 2.0, 0.0, 11.0, 8.0, 4.0, 12.0, 0.0, 0.0, 8.0, 8.0, 5.0, 8.0, 0.0, 0.0, 9.0, 8.0, 4.0, 11.0, 0.0, 1.0, 12.0, 7.0, 2.0, 14.0, 5.0, 10.0, 12.0, 0.0, 6.0, 13.0, 10.0, 0.0, 0.0, 0.0]
+}</pre>
+        <li>You will receive a JSON response with the model's prediction.</li>
+    </ol>
+    <p>Example using <strong>curl</strong>:</p>
+    <pre>curl -X POST https://nokia-jakubiwaszkeiwicz-recruitment-task.azurewebsites.net/knn -H "Content-Type: application/json" -d '{"features": [5.0, 13.0, 9.0, 1.0, 0.0, 0.0, 0.0, 13.0, 15.0, 10.0, 15.0, 5.0, 3.0, 15.0, 2.0, 0.0, 11.0, 8.0, 4.0, 12.0, 0.0, 0.0, 8.0, 8.0, 5.0, 8.0, 0.0, 0.0, 9.0, 8.0, 4.0, 11.0, 0.0, 1.0, 12.0, 7.0, 2.0, 14.0, 5.0, 10.0, 12.0, 0.0, 6.0, 13.0, 10.0, 0.0, 0.0, 0.0]}'</pre>
+    """
 
 @app.route("/knn", methods=["POST"])
 def knn():
-    # Parse the JSON input
     data = request.get_json()
-    input_data = np.array(data["features"]).reshape(1, -1)
+    input_data = np.array(data["features"])
 
-    # Predict using each model
     knn_pred = knn_model.predict(input_data)
 
-    # Combine the predictions into a response
     response = {
         "Prediction": knn_pred
     }
@@ -32,14 +49,11 @@ def knn():
 
 @app.route("/gnb", methods=["POST"])
 def gnb():
-    # Parse the JSON input
     data = request.get_json()
-    input_data = np.array(data["features"]).reshape(1, -1)
+    input_data = np.array(data["features"])
 
-    # Predict using each model
     gnb_pred = gnb_model.predict(input_data)
 
-    # Combine the predictions into a response
     response = {
         "Prediction": gnb_pred
     }
@@ -47,14 +61,11 @@ def gnb():
 
 @app.route("/mlp", methods=["POST"])
 def mlp():
-    # Parse the JSON input
     data = request.get_json()
     input_data = np.array(data["features"]).reshape(1, -1)
 
-    # Predict using each model
     mlp_pred = mlp_model.predict(input_data)
 
-    # Combine the predictions into a response
     response = {
         "Prediction": mlp_pred
     }
